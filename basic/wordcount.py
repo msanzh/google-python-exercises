@@ -47,25 +47,36 @@ import sys
 
 dictionary = {}
 
-def add_to_dictionay(word):
-  if word in dictionary:
-    dictionary[word] += 1
-  else:
-    dictionary[word] = 1
-
-def print_words(filename):
+def load_dictionay(filename):
   f = open(filename, 'r')
   for line in f:
-    list_word = line.lower().replace('\n', '').split(' ')
+    list_word = line.lower().split()
     for word in list_word:
       if word.isalpha():
-        add_to_dictionay(word)
+        if word in dictionary:
+          dictionary[word] += 1
+        else:
+          dictionary[word] = 1
   f.close()
+
+def print_words(filename):
+  load_dictionay(filename)
   for key in sorted(dictionary.keys()):
     print key, dictionary[key]
 
-
-
+def print_top(filename):
+  load_dictionay(filename)
+  def get_value(tup):
+    return tup[1]
+  
+  dictionary_s = sorted(dictionary.items(), key=get_value, reverse=True)
+  
+  counter = 0
+  for tup in dictionary_s:
+    print tup[0], tup[1]
+    counter += 1
+    if counter == 20:
+      break
 
 
 # This basic command line argument parsing code is provided and
