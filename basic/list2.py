@@ -13,8 +13,10 @@
 # so [1, 2, 2, 3] returns [1, 2, 3]. You may create a new list or
 # modify the passed in list.
 def remove_adjacent(nums):
-  # +++your code here+++
-  return
+  for n in nums:
+    if nums.count(n) > 1:
+      pos = nums.remove(n)
+  return nums
 
 
 # E. Given two lists sorted in increasing order, create and return a merged
@@ -22,8 +24,27 @@ def remove_adjacent(nums):
 # Ideally, the solution should work in "linear" time, making a single
 # pass of both lists.
 def linear_merge(list1, list2):
-  # +++your code here+++
-  return
+  res = []
+  idx_short = 0
+  idx_long = 0
+  
+  if len(list1) < len(list2):
+    list_short = list1
+    list_long = list2
+  else:
+    list_short = list2
+    list_long = list1
+  
+  while idx_short < len(list_short):
+    if list_short[idx_short] < list_long[idx_long]:
+      res.append(list_short[idx_short])
+      idx_short += 1
+    else:
+      res.append(list_long[idx_long])
+      idx_long += 1
+  
+  res.extend(list_long[idx_long:])
+  return res
 
 # Note: the solution above is kind of cute, but unforunately list.pop(0)
 # is not constant time with the standard python list implementation, so
